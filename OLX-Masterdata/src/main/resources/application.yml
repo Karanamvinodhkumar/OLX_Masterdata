@@ -1,0 +1,27 @@
+server:
+  port: 8000
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /olxmasterdata-monitor
+  endpoint:
+    shutdown:
+      enabled: true
+spring:
+  config:
+    import: configserver:http://localhost:8888  
+  application:
+    name: master-data
+  zipkin:    base-url: http://localhost:9411
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${random.uuid}
+    hostname: localhost
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+     defaultZone: http://${eureka.instance.hostname}:8761/eureka
+    
